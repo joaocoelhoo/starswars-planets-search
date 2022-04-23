@@ -5,13 +5,15 @@ import Context from './Context';
 function Provider({ children }) {
   const [state, setState] = useState({
     data: [],
+    originalData: [],
   });
 
   useEffect(() => {
     const dataResult = () => {
       fetch('https://swapi-trybe.herokuapp.com/api/planets/')
         .then((response) => response.json())
-        .then((responseJSON) => setState({ data: responseJSON.results }))
+        .then((responseJSON) => setState({ data: responseJSON.results,
+          originalData: responseJSON.results }))
         .catch((error) => console.log('An error occured', error));
     };
 
@@ -19,7 +21,7 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <Context.Provider value={ state }>
+    <Context.Provider value={ { state, setState } }>
       { children }
     </Context.Provider>
   );
