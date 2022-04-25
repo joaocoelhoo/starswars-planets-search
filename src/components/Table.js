@@ -2,7 +2,14 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Table() {
-  const { setState } = useContext(Context);
+  const {
+    setData,
+    setFilterByName,
+    setFilterByNumericValues,
+    setColumn,
+    setComparison,
+    setValue,
+  } = useContext(Context);
 
   function tablePlanets({ data }) {
     const planetRow = data.map((planetData, index) => (
@@ -55,18 +62,51 @@ function Table() {
   function onInputChange({ target }, { data, originalData }) {
     const inputValue = target.value;
     if (inputValue === '') {
-      setState({ data: originalData });
+      setData(originalData);
+      setFilterByName({ name: inputValue });
     } else {
       const planetsFilter = data.filter((planet) => {
         const planetName = planet.name.toLowerCase();
         return planetName.includes(inputValue.toLowerCase());
       });
 
-      setState((prevState) => ({
-        ...prevState,
-        data: planetsFilter,
-      }));
+      setData(planetsFilter);
+      setFilterByName({ name: inputValue });
     }
+  }
+
+  function onColumnChange({ target }) {
+    setColumn(target.value);
+  }
+
+  function onComparisonChange({ target }) {
+    setComparison(target.value);
+  }
+
+  function onValueChange({ target }) {
+    setValue(target.value);
+  }
+
+  function clickFilter({ column, comparison, value, data }) {
+    setFilterByNumericValues([
+      {
+        column,
+        comparison,
+        value,
+      },
+    ]);
+    const planetsFiltered = data.filter((planetData) => {
+      if (comparison === 'maior que') {
+        return parseInt(planetData[column], 10) > parseInt(value, 10);
+      }
+      if (comparison === 'menor que') {
+        return parseInt(planetData[column], 10) < parseInt(value, 10);
+      }
+
+      return parseInt(planetData[column], 10) === parseInt(value, 10);
+    });
+
+    setData(planetsFiltered);
   }
 
   return (
@@ -76,8 +116,33 @@ function Table() {
           <input
             data-testid="name-filter"
             type="text"
-            onChange={ (event) => { onInputChange(event, value.state); } }
+            onChange={ (event) => { onInputChange(event, value); } }
           />
+          <select data-testid="column-filter" onChange={ onColumnChange }>
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+          <select data-testid="comparison-filter" onChange={ onComparisonChange }>
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
+          <input
+            data-testid="value-filter"
+            type="number"
+            value={ value.value }
+            onChange={ onValueChange }
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ () => { clickFilter(value); } }
+          >
+            Filtrar
+          </button>
           <table>
             <thead>
               <tr>
@@ -97,7 +162,7 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              { tablePlanets(value.state) }
+              { tablePlanets(value) }
             </tbody>
           </table>
         </div>

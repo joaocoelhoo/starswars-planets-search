@@ -3,17 +3,38 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
-  const [state, setState] = useState({
-    data: [],
-    originalData: [],
-  });
+  const [data, setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
+
+  const contextValues = {
+    data,
+    setData,
+    originalData,
+    filterByName,
+    setFilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+  };
 
   useEffect(() => {
     const dataResult = () => {
       fetch('https://swapi-trybe.herokuapp.com/api/planets/')
         .then((response) => response.json())
-        .then((responseJSON) => setState({ data: responseJSON.results,
-          originalData: responseJSON.results }))
+        .then((responseJSON) => {
+          setData(responseJSON.results);
+          setOriginalData(responseJSON.results);
+        })
         .catch((error) => console.log('An error occured', error));
     };
 
@@ -21,7 +42,7 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <Context.Provider value={ { state, setState } }>
+    <Context.Provider value={ contextValues }>
       { children }
     </Context.Provider>
   );
