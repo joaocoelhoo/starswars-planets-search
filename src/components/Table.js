@@ -88,7 +88,8 @@ function Table() {
   }
 
   function clickFilter({ column, comparison, value, data }) {
-    setFilterByNumericValues([
+    setFilterByNumericValues((prevState) => [
+      ...prevState,
       {
         column,
         comparison,
@@ -109,6 +110,26 @@ function Table() {
     setData(planetsFiltered);
   }
 
+  function optionsElements({ filterByNumericValues }) {
+    const columns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const options = [];
+
+    columns.forEach((column, index) => {
+      const findColumn = filterByNumericValues.find((filter) => filter.column === column);
+      if (!findColumn) {
+        options.push(<option key={ index }>{ column }</option>);
+      }
+    });
+
+    return options;
+  }
+
   return (
     <Context.Consumer>
       {(value) => (
@@ -119,11 +140,7 @@ function Table() {
             onChange={ (event) => { onInputChange(event, value); } }
           />
           <select data-testid="column-filter" onChange={ onColumnChange }>
-            <option>population</option>
-            <option>orbital_period</option>
-            <option>diameter</option>
-            <option>rotation_period</option>
-            <option>surface_water</option>
+            { optionsElements(value) }
           </select>
           <select data-testid="comparison-filter" onChange={ onComparisonChange }>
             <option>maior que</option>
