@@ -1,13 +1,37 @@
 # :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# Projeto Starwars Planets Search
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+# Descrição
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+Este projeto trata-se de um programa que lista com filtros de planetas do universo de Star Wars usando Context API e Hooks para controlar os estados globais.
+
+O projeto foi desenvolvido durante o curso da [Trybe](https://www.betrybe.com/) para praticas afim de utilizar a Context API do React para gerenciar estado, utilizar o React Hook useState, useContext, useEffect e Criar React Hooks customizados.
+
+# Tecnologias utilizadas
+
+ • Javascript
+ 
+ • React
+ 
+ # Instalando Dependências
+ 
+ - Clone o repositório e
+use o comando: ```git clone git@github.com:joaocoelhoo/starswars_planets_search.git```
+
+- Entre na pasta do repositório que você acabou de clonar:
+```cd starswars_planets_search```
+
+- Instale as dependências:
+```npm install```
+
+- Inicialize o projeto
+```npm start```
+
+# Arquivos
+
+- Desenvolvidos por mim: arquivos da pasta ```src```
+- Demais arquivos foram desenvolvidos pela trybe.
+
+
+# Contato
+João Coelho - [LinkedIn](https://www.linkedin.com/in/jcoelhoo/) - joaopaulomelocoelho@gmail.com
