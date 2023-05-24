@@ -1,4 +1,3 @@
-# :construction: README customizado em construção ! :construction:
 # Projeto Starwars Planets Search
 
 # Descrição
